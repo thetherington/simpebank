@@ -10,7 +10,7 @@ import (
 
 type createAccountRequest struct {
 	Owner    string `json:"owner" binding:"required"`
-	Currency string `json:"currency" binding:"required,oneof=USD EUR"`
+	Currency string `json:"currency" binding:"required,currency"`
 }
 
 func (server *Server) createAccount(ctx *gin.Context) {
@@ -95,7 +95,7 @@ type updateAccountRequestId struct {
 
 type updateAccountRequestData struct {
 	Owner    string `json:"owner"`
-	Currency string `json:"currency" binding:"omitempty,oneof=USD EUR"`
+	Currency string `json:"currency" binding:"omitempty,oneof=USD EUR CAD"`
 }
 
 func (server *Server) updateAccount(ctx *gin.Context) {
