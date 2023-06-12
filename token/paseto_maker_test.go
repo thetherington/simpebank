@@ -1,7 +1,6 @@
 package token
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -42,7 +41,6 @@ func TestExpiredPasetoToken(t *testing.T) {
 	require.NotEmpty(t, token)
 
 	payload, err := maker.VerifyToken(token)
-	fmt.Println(err)
 	require.Error(t, err)
 	require.ErrorIs(t, err, ErrExpiredToken)
 	require.Nil(t, payload)

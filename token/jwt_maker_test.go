@@ -1,7 +1,6 @@
 package token
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -43,7 +42,6 @@ func TestExpiredJWTToken(t *testing.T) {
 	require.NotEmpty(t, token)
 
 	payload, err := maker.VerifyToken(token)
-	fmt.Println(err)
 	require.Error(t, err)
 	require.ErrorIs(t, err, jwt.ErrTokenExpired)
 	require.Nil(t, payload)
