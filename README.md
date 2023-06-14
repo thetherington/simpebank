@@ -1,3 +1,3 @@
 # simpebank
 
-![CI Test](https://github.com/thetherington/simpebank/actions/workflows/ci.yml/badge.svg)
+![Unit Tests](https://github.com/thetherington/simpebank/actions/workflows/test.yml/badge.svg)
