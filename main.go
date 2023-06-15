@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"database/sql"
+	"embed"
+	"io/fs"
 	"log"
 	"net"
 	"net/http"
@@ -19,6 +21,9 @@ import (
 	"github.com/thetherington/simplebank/pb"
 	"github.com/thetherington/simplebank/util"
 )
+
+//go:embed doc/swagger/*
+var assets embed.FS
 
 func main() {
 	config, err := util.LoadConfig(".")
@@ -103,6 +108,16 @@ func runGatewayServer(config util.Config, store db.Store) {
 
 	mux := http.NewServeMux()
 	mux.Handle("/", grpcMux)
+
+	// serve the swagger static assets for a basic front end swagger page
+	// swagger-initializer.js was hand changed to point to the simple_bank.swagger.json file
+	//
+	// https://github.com/swagger-api/swagger-ui/tree/master/dist
+
+	assets, _ := fs.Sub(assets, "doc/swagger")
+
+	fs := http.FileServer(http.FS(assets))
+	mux.Handle("/swagger/", http.StripPrefix("/swagger/", fs))
 
 	listener, err := net.Listen("tcp", config.HTTPServerAddress)
 	if err != nil {
