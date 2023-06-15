@@ -32,10 +32,10 @@ func NewJWTMaker(secretKey string) (Maker, error) {
 }
 
 // CreateToken creates a new token for specific username and duration
-func (maker *JWTMaker) CreateToken(username string, duration time.Duration) (string, error) {
+func (maker *JWTMaker) CreateToken(username string, duration time.Duration) (string, *Payload, error) {
 	payload, err := NewPayload(username, duration)
 	if err != nil {
-		return "", err
+		return "", payload, err
 	}
 
 	// Create claims with multiple fields populated
@@ -52,10 +52,10 @@ func (maker *JWTMaker) CreateToken(username string, duration time.Duration) (str
 
 	signedToken, err := token.SignedString([]byte(maker.secretKey))
 	if err != nil {
-		return "", fmt.Errorf("failed to sign token in createJWT: %w", err)
+		return "", payload, fmt.Errorf("failed to sign token in createJWT: %w", err)
 	}
 
-	return signedToken, nil
+	return signedToken, payload, nil
 
 }
 

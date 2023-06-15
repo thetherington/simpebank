@@ -2,7 +2,10 @@ module github.com/thetherington/simplebank
 
 go 1.20
 
-require github.com/lib/pq v1.10.9
+require (
+	github.com/google/uuid v1.3.0
+	github.com/lib/pq v1.10.9
+)
 
 require (
 	github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da // indirect
@@ -21,7 +24,6 @@ require (
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang-jwt/jwt/v5 v5.0.0 // indirect
 	github.com/golang/mock v1.4.4 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
