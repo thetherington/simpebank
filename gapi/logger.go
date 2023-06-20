@@ -63,6 +63,7 @@ func HttpLogger(handler http.Handler) http.Handler {
 		// using a custom struct (ResponseWriter)
 		// to write status code and body to custom fields.
 		// able to use this information for logging
+		//
 		rec := &ResponseRecorder{
 			ResponseWriter: w,
 			StatusCode:     http.StatusOK,
