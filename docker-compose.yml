@@ -9,6 +9,14 @@ services:
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=simple_bank
   
+  redis:
+    image: redis:7-alpine
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+      
   api:
     build:
       context: .
@@ -18,7 +26,12 @@ services:
       - "9090:9090"
     environment:
       - DB_SOURCE=postgresql://root:secret@postgres:5432/simple_bank?sslmode=disable
+      - REDIS_ADDRESS=redis:6379
+      - EMAIL_SERVER_HOST=mailhog
+      - MIGRATION_URL=file://migration
     depends_on:
       - postgres
+      - redis
+      - mailhog
     entrypoint: ["/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh"]
     command: [ "/app/main" ]
