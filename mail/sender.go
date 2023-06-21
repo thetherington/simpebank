@@ -46,7 +46,10 @@ func (sender *MailHogSender) SendEmail(subject string, content string, to []stri
 		}
 	}
 
-	smtpAuth := smtp.PlainAuth("", sender.fromEmailAddress, sender.fromEmailPassword, sender.host)
+	// smtpAuth := smtp.PlainAuth("", sender.fromEmailAddress, sender.fromEmailPassword, sender.host)
+
+	// needed for mailhog when not localhost
+	smtpAuth := smtp.CRAMMD5Auth(sender.fromEmailAddress, sender.fromEmailPassword)
 
 	return e.Send(fmt.Sprintf("%s:%s", sender.host, sender.port), smtpAuth)
 }
